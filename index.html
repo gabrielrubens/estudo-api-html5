@@ -105,23 +105,51 @@
           <div class="navbar-inner">
             <div class="container">
               <ul class="nav" id="myTab">
-                <li class="active"><a href="#" data-toggle="tab">Home</a></li>
-                <li><a href="#" data-toggle="tab">Offline</a></li>
-                <li><a href="#" data-toggle="tab">Video</a></li>
-                <li><a href="#" data-toggle="tab">Som</a></li>
-                <li><a href="#" data-toggle="tab">Bateria</a></li>                
+                <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                <li><a href="#offline" data-toggle="tab">Offline</a></li>
+                <li><a href="#video" data-toggle="tab">Video</a></li>
+                <li><a href="#som" data-toggle="tab">Som</a></li>
+                <li><a href="#bateria" data-toggle="tab">Bateria</a></li>                
               </ul>
             </div>
           </div>
         </div><!-- /.navbar -->
       </div>
 
-      <!-- Jumbotron -->
-      <div class="jumbotron">
-        <h1>APIs HTML5</h1>
-        <p class="lead">Projeto de estudo de algumas APIs do HTML5.</p>
-        <a class="btn btn-large btn-success" href="#">Clique aqui e veja o primeiro exemplo</a>
-      </div>
+		<div class="tab-content">
+		  <div class="tab-pane active" id="home">
+			  <div class="jumbotron">
+				<h1>APIs HTML5</h1>
+				<p class="lead">Projeto de estudo de algumas APIs do HTML5.</p>
+				<a class="btn btn-large btn-success" href="#">Clique aqui e veja o primeiro exemplo</a>
+			  </div>		 		  
+		  </div><!-- /tab-content -->
+		  
+		  <div class="tab-pane" id="offline">
+		  	offline
+		  	Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris.
+		  </div><!-- /offline -->
+		  <div class="tab-pane" id="video">
+		  	video
+		  	Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris.
+		  </div><!-- /video -->
+		  <div class="tab-pane" id="som">
+		  	som
+		  	Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris.
+		  </div><!-- /som -->
+		  <div class="tab-pane" id="bateria">
+		  	bateria
+			<div id="bateria-level" class="progress progress-striped">
+				  <div id="bateria-barra" class="bar" style="width: 0%;"></div>
+			</div>
+			<div id="bateria-tempo" class="alert alert-info"></div>
+			bateria	
+			<br>
+			<div id="codigo-bateria">
+
+			</div><!-- /codigo-bateria -->
+		  </div><!-- /bateria -->
+		</div><!-- /tab-content-->
 
       <hr>
 
@@ -174,6 +202,40 @@
 			e.preventDefault();
 			$(this).tab('show');
 		});
+		
+		$(document).ready( function(){
+			mostrarStatusDaBateria();			
+		});
+		
+		function mostrarStatusDaBateria(){
+				// Get the battery!
+				var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
+				var batteryPorcentagem = (battery.level * 100) +'%';
+				$('#bateria-barra').css('width', batteryPorcentagem)
+									.html(batteryPorcentagem);
+				
+				$('#bateria-tempo').html('Tempo de bateria ' + battery.dischargingTime);
+				
+				// A few useful battery properties
+				console.warn("Battery charging: ", battery.charging); // true
+				console.warn("Battery level: ", battery.level); // 0.58
+				console.warn("Battery level: ", battery.level * 100); // 0.58
+				console.warn("Battery discharging time: ", battery.dischargingTime);
+
+				// Add a few event listeners
+				battery.addEventListener("chargingchange", function(e) {
+					console.warn("Battery charge change: ", battery.charging);
+				}, false);
+				battery.addEventListener("chargingtimechange", function(e) {
+					console.warn("Battery charge time change: ", battery.chargingTime);
+				}, false);
+				battery.addEventListener("dischargingtimechange", function(e) {
+					console.warn("Battery discharging time change: ", battery.dischargingTime);
+				}, false);
+				battery.addEventListener("levelchange", function(e) {
+					console.warn("Battery level change: ", battery.level);
+				}, false);
+			}
 	</script>
 
   </body>
